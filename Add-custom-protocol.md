@@ -1,4 +1,4 @@
-Since v1.1.0, PacketGen permits adding your own header classes.
+Since v1.1.0, PacketGen allows you adding your own header classes.
 
 ## Quick start
 To add a new/custom header, you first have to define the new header class. For example:
