@@ -35,9 +35,11 @@ Management frames also may contain some elements (see IEEE 802.11 standard):
 
 ```ruby
 # add a SSID to AssociationRequest frame
-pkt.dot11_assoreq.elements << PacketGen::Header::Dot11::Element.new(type: 'SSID', value: 'My SSID')
+pkt.dot11_assoreq.elements << PacketGen::Header::Dot11::Element.new(type: 'SSID',
+                                                                    value: 'My SSID')
 # And also add supported rates
-pkt.dot11_assoreq.elements << PacketGen::Header::Dot11::Element.new(type: 'Rates', value: supported_rates)
+pkt.dot11_assoreq.elements << PacketGen::Header::Dot11::Element.new(type: 'Rates',
+                                                                    value: supported_rates)
 ```
 
 ### Create data frames
@@ -53,7 +55,8 @@ pkt.dot11_data     # => PacketGen::Header::Dot11::Data
 To send a Dot11 packet, simply do:
 
 ```ruby
-pkt = PacketGen.gen('Dot11::Management', mac1: clientaddr, mac2: bssid, mac3: bssid).add('Dot11::DeAuth', reason: 7)
+pkt = PacketGen.gen('Dot11::Management', mac1: clientaddr, mac2: bssid, mac3: bssid).
+                add('Dot11::DeAuth', reason: 7)
 # compute all checksum and length
 pkt.calc
 pkt.to_w
