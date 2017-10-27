@@ -81,3 +81,7 @@ pkt.write('one_packet.pcapng')
 # write multiple packets to a PcapNG file
 PacketGen.write('more_packets.pcapng', packets)
 ```
+
+## See also
+
+API documentation: http://www.rubydoc.info/gems/packetgen
