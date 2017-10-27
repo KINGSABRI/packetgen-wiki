@@ -59,7 +59,7 @@ pkt = PacketGen.gen('Dot11::Management', mac1: clientaddr, mac2: bssid, mac3: bs
                 add('Dot11::DeAuth', reason: 7)
 # compute all checksum and length
 pkt.calc
-pkt.to_w
+pkt.to_w('wlan0')
 ```
 Before sending a packet, you always should call `PacketGen::Packet#calc` to automatically set lengths and checksums in packets. This is not done automatically to let you send malformed packets on "wire" for network test purpose.
 
