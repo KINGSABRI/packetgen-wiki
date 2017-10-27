@@ -2,7 +2,7 @@ PacketGen provides an interactive console: `pgconsole`. It may be used to quickl
 
 `pgconsole` uses IRB, or Pry if it is installed. It includes [PacketGen](http://www.rubydoc.info/gems/packetgen/PacketGen) class methods and [PacketGen::Utils](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils) ones to simplify access to them.
 
-## Quick access to `PacketGen` methods
+## Quick access to PacketGen methods
 `gen`, `parse`, `capture`, `read`, `write` and `default_iface` are quickly accessible:
 
 ```
@@ -67,6 +67,7 @@ pg> arp '192.168.0.1'
 ```
 
 Utils methods are:
-* [`arp`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#arp-class_method) to get MAC address for given IP address,
-* [`arp_spoof`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#arp_spoof-class_method) to start an ARP spoofing attack,
-* [`mitm`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#mitm-class_method) to start a Man-In-The-Middle attack (on local network only).
+* [`arp`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#arp-class_method)
+  to get MAC address for given IP address,
+* [`arp_spoof`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#arp_spoof-class_method)
+  to make ARP spoofing.

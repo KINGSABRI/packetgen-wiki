@@ -24,7 +24,8 @@ PacketGen.gen('Eth', src: '00:00:00:00:00:01', dst: '00:00:00:00:00:02').to_w
 # send IP packet
 PacketGen.gen('IP', src: '192.168.1.1', dst: '192.168.1.2').to_w
 # send forged IP packet over Ethernet
-PacketGen.gen('Eth', src: '00:00:00:00:00:01', dst: '00:00:00:00:00:02').add('IP').to_w('eth1')
+PacketGen.gen('Eth', src: '00:00:00:00:00:01', dst: '00:00:00:00:00:02').
+          add('IP').to_w('eth1')
 ```
 
 ### Parse packets from binary data
@@ -40,7 +41,8 @@ PacketGen.capture do |packet|
 end
 
 # Capture some packets, and act on them afterward
-packets = PacketGen.capture(iface: 'eth0', max: 10)   # return when 10 packets were captured
+# will return when 10 packets will be captured
+packets = PacketGen.capture(iface: 'eth0', max: 10)
 
 # Use filters
 packets = PacketGen.capture(iface: 'eth0', filter: 'ip src 1.1.1.2', max: 1)

@@ -35,11 +35,12 @@ Management frames also may contain some elements (see IEEE 802.11 standard):
 
 ```ruby
 # add a SSID to AssociationRequest frame
-pkt.dot11_assoreq.elements << PacketGen::Header::Dot11::Element.new(type: 'SSID',
-                                                                    value: 'My SSID')
+el1 = PacketGen::Header::Dot11::Element.new(type: 'SSID', value: 'My SSID')
+pkt.dot11_assoreq.elements << el1
+
 # And also add supported rates
-pkt.dot11_assoreq.elements << PacketGen::Header::Dot11::Element.new(type: 'Rates',
-                                                                    value: supported_rates)
+el2 = PacketGen::Header::Dot11::Element.new(type: 'Rates', value: supported_rates)
+pkt.dot11_assoreq.elements << el2
 ```
 
 ### Create data frames
