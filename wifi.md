@@ -81,5 +81,17 @@ end
 ### Parsing wifi packets in general
 Parsing wifi packets is also supported from reading from a PCAP (or PCAP-ng) file, or from parsing a binary string.
 
+## Frame Control Sequence
+
+FCS is the CRC of the Dot11 frame. By default, PacketGen, sets a FCS field in all Dot11
+frames, and try to parse it when parsing or capturing.
+
+But, some drivers remove FCS field when capturing, and/or do not support setting it.
+You may deactivate FCS in Dot11, for all packets:
+
+```ruby
+PacketGen::Header::Dot11.has_fcs = false
+```
+
 ## See also
 API documentation for [PacketGen::Header::Dot11](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/Dot11.html)
