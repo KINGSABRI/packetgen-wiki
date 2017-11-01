@@ -56,12 +56,15 @@ pkt.dot11_data     # => PacketGen::Header::Dot11::Data
 To send a Dot11 packet, simply do:
 
 ```ruby
-pkt = PacketGen.gen('Dot11::Management', mac1: clientaddr, mac2: bssid, mac3: bssid).
+pkt = PacketGen.gen('RadioTap').
+                add('Dot11::Management', mac1: clientaddr, mac2: bssid, mac3: bssid).
                 add('Dot11::DeAuth', reason: 7)
 # compute all checksum and length
 pkt.calc
 pkt.to_w('wlan0')
 ```
+RadioTap header is needed to send packets on the air.
+
 Before sending a packet, you always should call `PacketGen::Packet#calc` to automatically set lengths and checksums in packets. This is not done automatically to let you send malformed packets on "wire" for network test purpose.
 
 ## Capture and parse wifi packets
