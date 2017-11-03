@@ -128,7 +128,34 @@ class ExampleHeader
 end
 ```
 
-### Packet magics
+## Add a new ASN.1 header
+
+Some header may be defined using ASN.1 notation, like SNMP.
+
+To define such a header, use [`PacketGen::Header::ASN1Base`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/ASN1Base) as base class:
+
+```ruby
+class SNMP < PacketGen::Header::ASN1Base
+  sequence :message,
+            content: [enumerated(:version, value: 'v2c',
+                                 enum: { 'v1' => 0, 'v2c' => 1, 'v2' => 2, 'v3' =>}),
+                      octet_string(:community, value: 'public'),
+                      model(:data, PDUClass)]
+
+  define_attributes :version, :community
+end
+```
+
+This definition uses lots of stuffs from [`rasn1`](https://github.com/sdaubert/rasn1/wiki) gem:
+* `sequence` defines a ASN.1 Sequence named `message`. This sequence contains:
+  * an Enumerated named `version`,
+  * an Octet String named `community`,
+  * and a PDUClass (subclass of [`RASN1::Model`](http://www.rubydoc.info/gems/rasn1/RASN1/Model)) named `data` and not defined here.
+
+`define_attributes` is a helper method to declare attributes from some ASN.1
+fields. This helps to mimic standard header behaviour.
+
+## Packet magics
 `PacketGen::Packet` defines some magics using specific header methods.
 
 If your header class has a checksum field and/or a length field, `Packet` provides magic for them. You have to define a `#calc_checksum` and/or a `calc_length` which appropriatly set checksum and/or length fields respectively.
