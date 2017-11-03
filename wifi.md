@@ -44,11 +44,16 @@ pkt.dot11_assoreq.elements << el2
 ```
 
 ### Create data frames
-Data frames may be created this way:
+Data frames may be created this way (LLC and SNAP layers are needed):
 
 ```ruby
-pkt = PacketGen.gen('Dot11::Data').add('IP')
+pkt = PacketGen.gen('Dot11::Data', mac1: receiver, mac2: transmitter, mac3: destmac).
+                add('LLC').add('SNAP').add('IP', src: sourceip, dst: destip)
 pkt.dot11_data     # => PacketGen::Header::Dot11::Data
+# #dot11 is a shortcut for #dot11_data
+pkt.dot11          # => PacketGen::Header::Dot11::Data
+# access to IP datagram
+pkt.ip             # => PacketGen::Header::IP
 ```
 
 ## Send wifi packets
