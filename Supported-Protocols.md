@@ -28,5 +28,4 @@ Here is a list of supported protocol
 |    GRE   	|     ✔     	|
 |    LLC   	|     ✔     	|
 |    IKE   	|     ✔     	|
-|   DHCP   	|     ❌ 	    |
 |          	|              	|
