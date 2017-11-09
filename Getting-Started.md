@@ -336,3 +336,10 @@ Captured packets may be filetered using tcpdump filter:
 ```
 pg> packets = capture(iface: 'eth0', max: 50, filter: 'ip dst 192.168.1.1')
 ```
+
+## Go further
+
+Read others pages from this wiki.
+
+[API documentation](http://www.rubydoc.info/gems/packetgen/) also gives all
+methods for `PacketGen::Packet` and for all header classes.
