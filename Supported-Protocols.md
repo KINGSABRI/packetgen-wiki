@@ -1,5 +1,3 @@
-# Supported Protocol
-
 Here is a list of supported protocol 
 
 | Symbol 	|       Description  	|

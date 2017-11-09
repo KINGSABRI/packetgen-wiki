@@ -1,5 +1,3 @@
-# WiFi
-
 PacketGen can handle wifi packets thanks to `PacketGen::Header::Dot11` classes.
 
 ## Create wifi packets

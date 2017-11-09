@@ -1,4 +1,3 @@
-# Interactive Console
 PacketGen provides an interactive console: `pgconsole`. It may be used to quickly write and test some pieces of code.
 
 `pgconsole` uses IRB, or Pry if it is installed. It includes [PacketGen](http://www.rubydoc.info/gems/packetgen/PacketGen) class methods and [PacketGen::Utils](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils) ones to simplify access to them.

@@ -1,5 +1,3 @@
-# Create Custom Protocol
-
 Since v1.1.0, PacketGen allows you adding your own header classes.
 
 ## Quick start
