@@ -20,7 +20,7 @@ Here is a list of supported protocol
 |    [DNS](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/DNS)   	|     ✔     	|
 |   [Dot11](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/Dot11)  	|     ✔     	|
 |   [Dot1q](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/Dot1q)  	|     ✔     	|
-|    EAP   	|     ❗      	|
+|    [EAP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/EAP)   	|     ✔      	|
 |    [ESP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/ESP)   	|     ✔     	|
 |    [GRE](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/GRE)   	|     ✔     	|
 |    [LLC](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/LLC)   	|     ✔     	|
