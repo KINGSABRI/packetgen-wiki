@@ -18,6 +18,24 @@ IP is itself often used with a higher protocol (transport level, or level 4):
 
 A IP header consists of a set of fields:
 
+```
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-------+-------+---------------+-------------------------------+
+|VERSION|  IHL  |      TOS      |          Total Length         |
++-------+-------+---------------+-----+-------------------------+
+|              ID               |flags|    Fragment Offset      |
++---------------+---------------+-----+-------------------------+
+|      TTL      |   Protocol    |          Checksum             |
++---------------+---------------+-------------------------------+
+|                         Source Address                        |
++---------------------------------------------------------------+
+|                      Destination Address                      |
++---------------------------------------------------------------+
+|                      Options (if IHL > 5)                     |
++---------------------------------------------------------------+
+```
+
 * 4-bit protocol version (`IP#version`). Attended value is 4 for IPv4,
 * 4-bit IP header length (`IP#ihl). Size of IP header in 32-bit words. As a IP header
   is 20 bytes long, this value should be 5. It may be greater if header has options,
