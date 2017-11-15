@@ -206,8 +206,8 @@ A TCP over IP packet may be created this way:
 ```ruby
 pkt = PacketGen.gen('IP', src: '127.0.0.1', dst: '127.0.0.1').
                 add('TCP', dport: 80, sport: 44158, flag_syn: true)
-pkt.is?('IP)          # => true
-pkt.is?('TCP)         # => true
+pkt.is?('IP')          # => true
+pkt.is?('TCP')         # => true
 pkt.tcp               # => PacketGen::Header::TCP
 pkt.tcp.sport         # => 44158
 pkt.tcp.dport         # => 80
