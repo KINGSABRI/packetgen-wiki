@@ -137,9 +137,190 @@ pg> pkt
 ----------------------------------------------------------------------
 ```
 
+See also http://rubydoc.info/gems/packetgen/PacketGen/Header/IP.
+
 ### TCP header
 
-work in progress
+A TCP header consists of:
+
+```
+                     1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-------------------------------+-------------------------------+
+|          Source Port          |       Destination Port        |
++-------------------------------+-------------------------------+
+|                       Sequence Number                         |
++---------------------------------------------------------------+
+|                      Acknowledge Number                       |
++-------+-----+-+-+-+-+-+-+-+-+-+-------------------------------+
+|  Data | RSV |N|C|E|U|A|P|R|S|F|                               |
+| Offset|0 0 0|S|W|C|R|C|S|S|Y|I|          Window Size          |
+|       |     | |R|E|G|K|H|T|N|N|                               |
++-------+-----+-+-+-+-+-+-+-+-+-+-------------------------------+
+|           Checksum            |  Urgent Pointer (if URG set)  |
++-------------------------------+-------------------------------+
+|                   Options (if data offset > 5)                |
++---------------------------------------------------------------+
+```
+
+* 16-bit source port (`TCP#sport`),
+* 16-bit destination port (`TCP#dport`),
+* 32-bit sequence number (`TCP#seqnum`),
+* 32-bit acknowledge number (`TCP#acknum`),
+* a 16-bit field (`TCP#u16`) composed og:
+  * 4-bit data offset (`TCP#data_offset`),
+  * 3-bit reserved field (`TCP#reserved`),
+  * 9 1-bit flags (`TCP#flags` or `TCP#flag_ns`, `TCP#flag_cwr`, `TCP#flag_ece`,
+    `TCP#flag_urg`, `TCP#flag_ack`, `TCP#flag_psh`, `TCP#flag_rst`, `TCP#flag_syn` and
+    `TCP#flag_fin`),
+* 16-bit window size (`TCP#window`),
+* 16-bit checksum (`TCP#checksum`),
+* 16-bit urgent pointer (`TCP#urg_pointer`),
+* an optional options field (`TCP#options`),
+* and a body (`TCP#body`).
+
+A TCP header may be built this way:
+
+```
+pg> PacketGen::Header::TCP.new(dport: 80, sport: 32768 + rand(2**15))
+=> ---- PacketGen::Header::TCP ------------------------------------------
+             Int16        sport: 43959      (0xabb7)
+             Int16        dport: 80         (0x0050)
+             Int32       seqnum: 1555880791 (0x5cbcdb57)
+             Int32       acknum: 0          (0x00000000)
+             Int16          u16: 20480      (0x5000)
+                    data_offset: 5          (0x5)
+                       reserved: 0
+                          flags: .........
+             Int16       window: 0          (0x0000)
+             Int16     checksum: 0          (0x0000)
+             Int16  urg_pointer: 0          (0x0000)
+           Options      options: 
+
+```
+
+If not specified, `seqnum` is a random value.
+
+A TCP over IP packet may be created this way:
+
+```ruby
+pkt = PacketGen.gen('IP', src: '127.0.0.1', dst: '127.0.0.1').
+                add('TCP', dport: 80, sport: 44158, flag_syn: true)
+pkt.is?('IP)          # => true
+pkt.is?('TCP)         # => true
+pkt.tcp               # => PacketGen::Header::TCP
+pkt.tcp.sport         # => 44158
+pkt.tcp.dport         # => 80
+pkt.tcp.seqnum        # => Integer
+pkt.tcp.acknum        # => Integer
+pkt.tcp.u16           # => 0x5002
+pkt.tcp.data_offset   # => 5
+pkt.tcp.flags         # => 0x002
+pkt.tcp.flag_ns?      # => false
+pkt.tcp.flag_cwr?     # => false
+pkt.tcp.flag_ece?     # => false
+pkt.tcp.flag_urg?     # => false
+pkt.tcp.flag_ack?     # => false
+pkt.tcp.flag_psh?     # => false
+pkt.tcp.flag_rst?     # => false
+pkt.tcp.flag_syn?     # => true
+pkt.tcp.flag_fin?     # => false
+pkt.tcp.window        # => Integer
+pkt.tcp.checksum      # => Integer
+pkt.tcp.urg_pointer   # => Integer
+pkt.tcp.options       # => PacketGen::Header::TCP::Options
+
+pkt.tcp.flag_rst = true
+pkt.tcp.sport = 44444
+```
+
+`checksum` field may be computed by `Header::TCP#calc_sum`. All checksum and length fields
+from this packet may by computed at once using `pkt.calc`:
+
+```
+pg> pkt.calc
+pg> pkt
+=> -- PacketGen::Packet -------------------------------------------------
+---- PacketGen::Header::IP -------------------------------------------
+              Int8           u8: 69         (0x45)
+                        version: 4
+                            ihl: 5
+              Int8          tos: 0          (0x00)
+             Int16       length: 45         (0x002d)
+             Int16           id: 25958      (0x6566)
+             Int16         frag: 0          (0x0000)
+                          flags: none
+                    frag_offset: 0          (0x0000)
+              Int8          ttl: 64         (0x40)
+              Int8     protocol: 6          (0x06)
+             Int16     checksum: 5987       (0x1763)
+              Addr          src: 127.0.0.1
+              Addr          dst: 127.0.0.1
+            String      options: ""
+---- PacketGen::Header::TCP ------------------------------------------
+             Int16        sport: 44444      (0xad9c)
+             Int16        dport: 80         (0x0050)
+             Int32       seqnum: 3904665160 (0xe8bc7648)
+             Int32       acknum: 0          (0x00000000)
+             Int16          u16: 20486      (0x5006)
+                    data_offset: 5          (0x5)
+                       reserved: 0
+                          flags: ......RS.
+             Int16       window: 0          (0x0000)
+             Int16     checksum: 63218      (0xf6f2)
+             Int16  urg_pointer: 0          (0x0000)
+           Options      options:
+```
+
+TCP options may be easily added:
+
+```
+pg> pkt.tcp.options << { opt: 'MSS', value: 1250 }
+pg> pkt.tcp.options << { opt: 'NOP' }
+pg> pkt
+=> -- PacketGen::Packet -------------------------------------------------
+---- PacketGen::Header::IP -------------------------------------------
+              Int8           u8: 69         (0x45)
+                        version: 4
+                            ihl: 5
+              Int8          tos: 0          (0x00)
+             Int16       length: 45         (0x002d)
+             Int16           id: 25958      (0x6566)
+             Int16         frag: 0          (0x0000)
+                          flags: none
+                    frag_offset: 0          (0x0000)
+              Int8          ttl: 64         (0x40)
+              Int8     protocol: 6          (0x06)
+             Int16     checksum: 5987       (0x1763)
+              Addr          src: 127.0.0.1
+              Addr          dst: 127.0.0.1
+            String      options: ""
+---- PacketGen::Header::TCP ------------------------------------------
+             Int16        sport: 44444      (0xad9c)
+             Int16        dport: 80         (0x0050)
+             Int32       seqnum: 3904665160 (0xe8bc7648)
+             Int32       acknum: 0          (0x00000000)
+             Int16          u16: 20486      (0x5006)
+                    data_offset: 5          (0x5)
+                       reserved: 0
+                          flags: ......RS.
+             Int16       window: 0          (0x0000)
+             Int16     checksum: 63218      (0xf6f2)
+             Int16  urg_pointer: 0          (0x0000)
+           Options      options: MSS:1250,NOP
+```
+
+As `TCP::Options` is a subclass of `Array`, all array methods may be used:
+
+```ruby
+pkt.tcp.options.each do |opt|
+  # opt class is a subclass from Header::TCP::Option
+  p opt
+  puts "kind: #{opt.kind}"
+  puts "length: #{opt.length}"
+  puts "value: #{opt.value.inspect}"
+end
+```
 
 ### UDP header
 
