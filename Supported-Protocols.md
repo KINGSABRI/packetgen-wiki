@@ -25,4 +25,7 @@ Here is a list of supported protocol
 |    [GRE](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/GRE)   	|     ✔     	|
 |    [LLC](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/LLC)   	|     ✔     	|
 |    [IKE](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/IKE)   	|     ✔     	|
+|    [HTTP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/HTTP)   	|     ✔     	|
+|    [BOOTP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/BOOTP)   	|     ✔     	|
+|    [DHCP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/DHCP)   	|     ✔     	|
 |          	|              	|
