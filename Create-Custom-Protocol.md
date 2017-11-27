@@ -35,7 +35,9 @@ pkt.myheader.field2.read 0x01
 ## Add a new header type, in more detail
 
 ### Define a header class
-A new header class should inherit from [`PacketGen::Header::Base`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/Base) class (or from `PacketGen::Header::ASN1Base` but this is off topic). This base class implements minimal API to parse a header from binary string, or to generate binary string from a header class.
+A new header class should inherit from [`PacketGen::Header::Base`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/Base) class (or from `PacketGen::Header::ASN1Base` but this is off topic). This base class
+implements minimal API (see [below](#header-minimal-api)) to parse a header from binary
+string, or to generate binary string from a header class.
 
 `PacketGen::Header::Base` inherits from  [`PacketGen::Types::Fields`](http://www.rubydoc.info/gems/packetgen/PacketGen/Types/Fields), which is a class to define headers or anything else with a binary format containing multiple fields.
 
@@ -162,3 +164,23 @@ If your header class has a checksum field and/or a length field, `Packet` provid
 Then `Packet#calc_checksum` and `Packet#calc_length` will calculate all checksum and length fields in all headers, including yours.
 
 If your header class is not an application layer one, you should define a `body` field of type `PacketGen::Types::String`. This will allow `Packet#parse` to automagically parse headers embedded in yours. Same magic will happen for `Packet#to_s`, `Packet#encapsulate`, `Packet#decapsulate` and `Packet#add`.
+
+## Header minimal API
+
+`PacketGen::Header::Base` and `PacketGen::Header::ASN1Base` are provided to simplify
+writing of new headers. But they may not be so useful for some protocol types.
+
+So, here is minimal API needed by PacketGen to handle a header class.
+
+A header MUST have accessors:
+* `#packet` : get/set packet to which header belongs.
+
+A header MUST respond to:
+* `#protocol_name`: get protocol name, usually class name as a String, without
+   module path,
+* `#method_name`: get method name, usually same as protocol name but downcase.
+  This name is used as accessor from packet to access header object,
+* `#read`: method to parse binary string and decode header,
+* `#parse?`: return `true` if decoded header is correct. Used when guessing if
+  header may be decoded from binary string. An example of use if checking first
+  4-bit field for IP version in a IP/IPv6 header.
