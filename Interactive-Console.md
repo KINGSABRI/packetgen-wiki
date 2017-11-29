@@ -70,4 +70,5 @@ Utils methods are:
 * [`arp`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#arp-class_method)
   to get MAC address for given IP address,
 * [`arp_spoof`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#arp_spoof-class_method)
-  to make ARP spoofing.
+  to do ARP spoofing.
+* [`mitm`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#mitm-class_method) to do a Man-In-The-Middle attack (on local network only).
