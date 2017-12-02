@@ -43,8 +43,7 @@ of these fields at once through `PacketGen::Packet#calc`, these fiels should be
 named `#length` and `#checksum`, respectively.
 
 Most of PacketGen header classes inherit from [`PacketGen::Header::Base`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/Base)
-class. This class implements [minimal API]
-(https://github.com/sdaubert/packetgen/wiki/Create-Custom-Protocol#header-minimal-api)
+class. This class implements [minimal API](https://github.com/sdaubert/packetgen/wiki/Create-Custom-Protocol#header-minimal-api)
 needed to parse packets and add headers to packets.
 
 ## Types
@@ -60,14 +59,14 @@ types are listed in table below.
 | `Int8Enum`                 | 8-bit enumerated integer                       |
 | `Int16`, `Int16be`         | 16-bit big-endian integer                      |
 | `Int16Enum`, `Int16beEnum` | 16-bit big-endian enumerated integer           |
-| `int16le`                  | 16-bit little-endian integer                   |
-| `int16leEnum`              | 16-bit little-endian enumerated integer        |
-| `int32`, `int32be`         | 32-bit big-endian integer                      |
-| `int32Enum`, `int32beEnum` | 32-bit big-endian enumerated integer           |
-| `int32le`                  | 32-bit little-endian integer                   |
-| `int32leEnum`              | 32-bit little-endian enumerated integer        |
-| `int64`, `int64be`         | 64-bit big-endian integer                      |
-| `int64le`                  | 64-bit little-endian integer                   |
+| `Int16le`                  | 16-bit little-endian integer                   |
+| `Int16leEnum`              | 16-bit little-endian enumerated integer        |
+| `Int32`, `Int32be`         | 32-bit big-endian integer                      |
+| `Int32Enum`, `Int32beEnum` | 32-bit big-endian enumerated integer           |
+| `Int32le`                  | 32-bit little-endian integer                   |
+| `Int32leEnum`              | 32-bit little-endian enumerated integer        |
+| `Int64`, `Int64be`         | 64-bit big-endian integer                      |
+| `Int64le`                  | 64-bit little-endian integer                   |
 | `String`                   | binary string                                  |
 | `CString`                  | null-terminated string                         |
 | `IntString`                | binary string prepended with its field         |
