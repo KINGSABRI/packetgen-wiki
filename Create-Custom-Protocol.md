@@ -93,7 +93,8 @@ To create new Fields or Header classes, PacketGen provides some base types:
   * big-endian integers: `Int16` or `Int16be`, `Int32` or `Int32be` and `Int64` or `Int64be`,
   * little-endian integers: `Int16le`, `Int32le` and `Int64le`,
 * enumerated integers: `Int8Enum`, `Int16Enum`, `Int16beEnum`, `Int16leEnum`, `Int32Enum`, `Int32beEnum` and `Int32leEnum`,
-* strings: `String` and `IntString` (a string with a length field at the beginning),
+* strings: `String`, `IntString` (a string with a length field at the beginning)
+  and `CString` (null-terminated string),
 * arrays: `Array` to define set of fields,
 * `TLV` to define fields as set of type-length-value,
 * `OUI` (_Organizationally Unique Identifier_).
