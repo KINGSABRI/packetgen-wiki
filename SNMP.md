@@ -306,6 +306,15 @@ snmp.pdu[:varbindlist]      # => PacketGen::Header::SNMP::VariableBindings
 ```
 
 `:generic_trap` may take these values:
+
+* `cold_start` or `0`,
+* `warm_start` or `1`,
+* `link_down` or `2`,
+* `link_up` or `3`,
+* `auth_failure` or `4`,
+* `egp_neighbor_loss` or `5`,
+* `specific` or `6`.
+
 ### SNMP::Bulk class
 
 ### SNMP::InformRequest class
