@@ -317,8 +317,51 @@ snmp.pdu[:varbindlist]      # => PacketGen::Header::SNMP::VariableBindings
 
 ### SNMP::Bulk class
 
+Create a Bulk PDU:
+
+```ruby
+bulk = PacketGen::Header::SNMP.new
+bulk.data.chosen = 5
+```
+
+Bulk accessors:
+
+```ruby
+bulk.pdu[:id]                # => RASN1::Types::Integer
+bulk.pdu[:non_repeaters]     # => RASN1::Types::Integer
+bulk.pdu[:max_repetitions]   # => RASN1::Types::Integer
+bulk.pdu[:varbindlist        # => PacketGen::Header::SNMP::VariableBindings
+```
+
 ### SNMP::InformRequest class
+
+Create a InformRequest PDU:
+
+```ruby
+ir = PacketGen::Header::SNMP.new
+ir.data.chosen = 6
+```
+
+InformRequest is a subclass of GetRequest, so it has the same accessors.
 
 ### SNMP::Trapv2 class
 
+Create a Trapv2 PDU:
+
+```ruby
+ir = PacketGen::Header::SNMP.new
+ir.data.chosen = 7
+```
+
+Trapv2 is a subclass of GetRequest, so it has the same accessors.
+
 ### SNMP::Report class
+
+Create a Report PDU:
+
+```ruby
+ir = PacketGen::Header::SNMP.new
+ir.data.chosen = 8
+```
+
+Report is a subclass of GetRequest, so it has the same accessors.
