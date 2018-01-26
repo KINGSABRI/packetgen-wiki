@@ -331,7 +331,7 @@ pg*     p pkt
 irb(#<PgConsole:0x0055d20a9812a0>):004:1> end
 ```
 
-Captured packets may be filetered using tcpdump filter:
+Captured packets may be filetered using a tcpdump filter:
 
 ```
 pg> packets = capture(iface: 'eth0', max: 50, filter: 'ip dst 192.168.1.1')
