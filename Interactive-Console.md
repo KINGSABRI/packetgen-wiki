@@ -58,7 +58,7 @@ pg> pkt.to_w
 ```
 
 ## Utils
-To ease tests, mMethods from `PacketGen::Utils` module are quickly accessible from `pgconsole`:
+To ease tests, Methods from `PacketGen::Utils` module are quickly accessible from `pgconsole`:
 ```
 pg> PacketGen::Utils.arp '192.168.0.1'
 => "aa:bb:cc:dd:ee:ff"
