@@ -29,7 +29,7 @@ has tag value 1, Integer has tag value 2.
 In context class, tags begin at 0xA0. For example, in SNMP context, 0xA0 tag is
 a GetRequest-PDU.
 
-Others objects may constructed from those basic ones using Sequences and Sets.
+Others objects may be constructed from those basic ones using Sequences and Sets.
 Sequences are like ruby arrays. Sets are arrays limited to a unique object type.
 
 Finally, a ASN.1 object is a tree, whose leafs are basic types, and non-leaf nodes
