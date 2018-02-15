@@ -4,7 +4,7 @@ PacketGen is a pure ruby library to handle network packets.
 
 ### Create network packets
 
-PacketGen make creating network packets in a ruby way easy. Multiple layers may
+PacketGen makes creating network packets in a ruby way easy. Multiple layers may
 be put together easily, and depending data from one layer to another is
  automatically updated. You even may create erroneous low-level packets to stress
  your  network devices.
