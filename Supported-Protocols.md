@@ -28,6 +28,7 @@ PacketGen provides built-in packet parsers for the following protocols:
 | [HTTP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/HTTP)      |     ✔     	|
 | [BOOTP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/BOOTP)    |     ✔     	|
 | [DHCP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/DHCP)      |     ✔     	|
+| [DHCPv6](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/DHCPv6)  |     !     	|
 | [TFTP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/TFTP)      |     ✔       |
 
 ##### Table Legend
