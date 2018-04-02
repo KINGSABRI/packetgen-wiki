@@ -19,6 +19,7 @@ PacketGen provides built-in packet parsers for the following protocols:
 | [MLD](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/MLD)    	  |     ✔     	|
 | [MLDv2](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/MLDv2) 	  |     ✔     	|
 | [OSPFv2](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/OSPFv2)  |     !     	|
+| [OSPFv3](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/OSPFv3)  |     !     	|
 | [GRE](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/GRE)   	    |     ✔     	|
 | [TCP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/TCP)   	    |     ✔     	|
 | [UDP](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/UDP)   	    |     ✔     	|
