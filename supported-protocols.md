@@ -40,5 +40,5 @@ PacketGen provides built-in packet parsers for the following protocols:
 | :---: | :---: |
 | ✔ | Supported |
 | ❗ | Under development |
-| ❌ | Not Supported |
+| ❌ | Not Supported - PR if you need it |
 
