@@ -1,9 +1,8 @@
-### UDP header
-
+# UDP
 
 A UDP header consists of:
 
-```
+```text
                      1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-------------------------------+-------------------------------+
@@ -13,15 +12,15 @@ A UDP header consists of:
 +-------------------------------+-------------------------------+
 ```
 
-* 16-bit source port (`UDP#sport`),
-* 16-bit destination port (`UDP#dport`),
-* 16-bit length (`UDP#length`),
-* 16-bit checksum (`UDP#checksum`),
-* and a body (`UDP#body`).
+* 16-bit source port \(`UDP#sport`\),
+* 16-bit destination port \(`UDP#dport`\),
+* 16-bit length \(`UDP#length`\),
+* 16-bit checksum \(`UDP#checksum`\),
+* and a body \(`UDP#body`\).
 
 A UDP header may be built this way:
 
-```
+```text
 pg> PacketGen::Header::UDP.new(dport: 53, sport: 65053)
 => ---- PacketGen::Header::UDP ------------------------------------------
              Int16        sport: 65053      (0xfe1d)
@@ -29,7 +28,6 @@ pg> PacketGen::Header::UDP.new(dport: 53, sport: 65053)
              Int16       length: 8          (0x0008)
              Int16     checksum: 0          (0x0000)
 ```
-
 
 A UDP over IP packet may be created this way:
 
@@ -49,11 +47,9 @@ pkt.body              # => "abcd"
 pkt.udp.sport = 44444
 ```
 
-`checksum` and `length` fields may be computed by `Header::UDP#calc_sum` and
-`Header::UDP#calc_length` respectively. All checksum and length fields from this packet
-may by computed at once using `pkt.calc`:
+`checksum` and `length` fields may be computed by `Header::UDP#calc_sum` and `Header::UDP#calc_length` respectively. All checksum and length fields from this packet may by computed at once using `pkt.calc`:
 
-```
+```text
 pg> pkt.calc
 pg> pkt
 => -- PacketGen::Packet -------------------------------------------------
@@ -85,6 +81,5 @@ pg> pkt
 ----------------------------------------------------------------------
 ```
 
-See also http://rubydoc.info/gems/packetgen/PacketGen/Header/UDP.
+See also [http://rubydoc.info/gems/packetgen/PacketGen/Header/UDP](http://rubydoc.info/gems/packetgen/PacketGen/Header/UDP).
 
- 

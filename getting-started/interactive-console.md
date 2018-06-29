@@ -1,11 +1,14 @@
+# Interactive Console
+
 PacketGen provides an interactive console: `pgconsole`. It may be used to quickly write and test some pieces of code.
 
 `pgconsole` uses IRB, or Pry if it is installed. It includes [PacketGen](http://www.rubydoc.info/gems/packetgen/PacketGen) class methods and [PacketGen::Utils](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils) ones to simplify access to them.
 
 ## Quick access to PacketGen methods
+
 `gen`, `parse`, `capture`, `read`, `write` and `default_iface` are quickly accessible:
 
-```
+```text
 pg> pkt = gen('Eth', src: '00:00:00:00:00:01', dst: '00:00:00:00:00:02')
 => -- PacketGen::Packet -------------------------------------------------
 ---- PacketGen::Header::Eth ------------------------------------------
@@ -32,9 +35,10 @@ pg> capture { |pkt| p pkt }
 ```
 
 ## local configuration
+
 `pgconsole` provides quick access to local network configuration through `config`, a [PacketGen::Config](http://www.rubydoc.info/gems/packetgen/PacketGen/Config) object:
 
-```
+```text
 $ pgconsole
 pg> config.default_iface
 => "eth0"
@@ -50,7 +54,7 @@ pg> config.ipaddr('lo')
 
 This local configuration may be used to forge packets:
 
-```
+```text
 pg> pkt = gen('IP', src: config.ipaddr, dst: '8.8.8.8')
 pg> pkt.recalc
 pg> pkt.to_w
@@ -58,8 +62,10 @@ pg> pkt.to_w
 ```
 
 ## Utils
+
 To ease tests, Methods from `PacketGen::Utils` module are quickly accessible from `pgconsole`:
-```
+
+```text
 pg> PacketGen::Utils.arp '192.168.0.1'
 => "aa:bb:cc:dd:ee:ff"
 pg> arp '192.168.0.1'
@@ -67,8 +73,14 @@ pg> arp '192.168.0.1'
 ```
 
 Utils methods are:
+
 * [`arp`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#arp-class_method)
+
   to get MAC address for given IP address,
+
 * [`arp_spoof`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#arp_spoof-class_method)
+
   to do ARP spoofing.
-* [`mitm`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#mitm-class_method) to do a Man-In-The-Middle attack (on local network only).
+
+* [`mitm`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#mitm-class_method) to do a Man-In-The-Middle attack \(on local network only\).
+

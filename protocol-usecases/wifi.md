@@ -1,13 +1,15 @@
+# WiFi
+
 PacketGen can handle wifi packets thanks to `PacketGen::Header::Dot11` classes.
 
 ## Create wifi packets
 
-As `PacketGen::Header::Dot11` is an abstract class it should not be used directly.
-Instead, `PacketGen::Header::Dot11::Control`, `PacketGen::Header::Dot11::Management` and `PacketGen::Header::Dot11::Data` should be used.
+As `PacketGen::Header::Dot11` is an abstract class it should not be used directly. Instead, `PacketGen::Header::Dot11::Control`, `PacketGen::Header::Dot11::Management` and `PacketGen::Header::Dot11::Data` should be used.
 
 Creation of protected frames is not supported yet.
 
 ### Create control frames
+
 Control frames may be created this way:
 
 ```ruby
@@ -16,6 +18,7 @@ pkt.dot11_control     # => PacketGen::Header::Dot11::Control
 ```
 
 ### Create management frames
+
 Management frames may be created this way:
 
 ```ruby
@@ -31,7 +34,7 @@ pkt.add('Dot11::AssoReq')
 pkt.dot11_assoreq        # => PacketGen::Header::Dot11::AssoReq
 ```
 
-Management frames also may contain some elements (see IEEE 802.11 standard):
+Management frames also may contain some elements \(see IEEE 802.11 standard\):
 
 ```ruby
 # add a SSID to AssociationRequest frame
@@ -44,7 +47,8 @@ pkt.dot11_assoreq.elements << el2
 ```
 
 ### Create data frames
-Data frames may be created this way (LLC and SNAP layers are needed):
+
+Data frames may be created this way \(LLC and SNAP layers are needed\):
 
 ```ruby
 pkt = PacketGen.gen('Dot11::Data', mac1: receiver, mac2: transmitter, mac3: destmac).
@@ -68,6 +72,7 @@ pkt = PacketGen.gen('RadioTap').
 pkt.calc
 pkt.to_w('wlan0')
 ```
+
 RadioTap header is needed to send packets on the air.
 
 Before sending a packet, you always should call `PacketGen::Packet#calc` to automatically set lengths and checksums in packets. This is not done automatically to let you send malformed packets on "wire" for network test purpose.
@@ -86,20 +91,22 @@ PacketGen.capture(iface: 'wlan0') do |packet|
   do_stuffs_with(packet)
 end
 ```
+
 ### Parsing wifi packets in general
-Parsing wifi packets is also supported from reading from a PCAP (or PCAP-ng) file, or from parsing a binary string.
+
+Parsing wifi packets is also supported from reading from a PCAP \(or PCAP-ng\) file, or from parsing a binary string.
 
 ## Frame Control Sequence
 
-FCS is the CRC of the Dot11 frame. By default, PacketGen, sets a FCS field in all Dot11
-frames, and try to parse it when parsing or capturing.
+FCS is the CRC of the Dot11 frame. By default, PacketGen, sets a FCS field in all Dot11 frames, and try to parse it when parsing or capturing.
 
-But, some drivers remove FCS field when capturing, and/or do not support setting it.
-You may deactivate FCS in Dot11, for all packets:
+But, some drivers remove FCS field when capturing, and/or do not support setting it. You may deactivate FCS in Dot11, for all packets:
 
 ```ruby
 PacketGen::Header::Dot11.has_fcs = false
 ```
 
 ## See also
+
 API documentation for [PacketGen::Header::Dot11](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/Dot11.html)
+
