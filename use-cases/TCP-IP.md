@@ -325,41 +325,6 @@ end
 See also http://rubydoc.info/gems/packetgen/PacketGen/Header/TCP.
 
 
-
-### TCP and UDP headers
-
-TCP and UDP headers may be added to a IPv6 packet:
-
-```ruby
-pg> pkt = PacketGen.gen('IPv6', src: '::1', dst: '::1')
-pg> pkt.add('TCP', dport: 80, sport: 51234)
-pg> pkt
-=> -- PacketGen::Packet -------------------------------------------------
----- PacketGen::Header::IPv6 -----------------------------------------
-             Int32          u32: 1610612736 (0x60000000)
-                        version: 6
-                         tclass: 0          (0x00)
-                     flow_label: 0          (0x00000)
-             Int16       length: 0          (0x0000)
-              Int8         next: 6          (0x06)
-              Int8          hop: 64         (0x40)
-              Addr          src: ::1
-              Addr          dst: ::1
----- PacketGen::Header::TCP ------------------------------------------
-             Int16        sport: 51234      (0xc822)
-             Int16        dport: 80         (0x0050)
-             Int32       seqnum: 6082437    (0x005ccf85)
-             Int32       acknum: 0          (0x00000000)
-             Int16          u16: 20480      (0x5000)
-                    data_offset: 5          (0x5)
-                       reserved: 0
-                          flags: .........
-             Int16       window: 0          (0x0000)
-             Int16     checksum: 0          (0x0000)
-             Int16  urg_pointer: 0          (0x0000)
-           Options      options:
-```
-
 ## Sending packets
 
 IP packets may be sent at link level (Ethernet, IEEE 802.11) or at network one (IP).
