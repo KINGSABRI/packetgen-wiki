@@ -14,6 +14,7 @@
   * [ICMPv6](protocols/icmpv6.md)
   * [IPv6](protocols/ipv6.md)
   * [UDP](protocols/udp.md)
+  * [OSPFv2](protocols/ospfv2.md)
 * [Advanced Use](advanced-use/README.md)
   * [Create Custom Protocol](advanced-use/create-custom-protocol.md)
 
