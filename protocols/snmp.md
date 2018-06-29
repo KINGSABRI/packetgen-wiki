@@ -1,7 +1,3 @@
----
-description: Simple Network Management Protocol (SNMP)
----
-
 # SNMP
 
 SNMP is quite different from others protocols: it uses [ASN.1](https://en.wikipedia.org/wiki/ASN.1) data structures. So, to understand SNMP serialization/deserialization, you need to understand ASN.1.

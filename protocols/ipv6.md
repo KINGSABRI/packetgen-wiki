@@ -1,5 +1,7 @@
 # IPv6
 
+## IPv6
+
 A IPv6 header consists of a set of fields:
 
 ```text
@@ -95,8 +97,10 @@ pg> pkt
 ----------------------------------------------------------------------
 ```
 
-<<<<<<< HEAD:use-cases/IPv6.md
-## TCP and UDP headers to IPv6 
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:use-cases/IPv6.md
+
+### TCP and UDP headers to IPv6
+
 TCP and UDP headers may be added to a IPv6 packet:
 
 ```ruby
@@ -129,9 +133,9 @@ pg> pkt
            Options      options:
 ```
 
+## See also [http://rubydoc.info/gems/packetgen/PacketGen/Header/IPv6](http://rubydoc.info/gems/packetgen/PacketGen/Header/IPv6).
 
-See also http://rubydoc.info/gems/packetgen/PacketGen/Header/IPv6.
-=======
 See also [http://rubydoc.info/gems/packetgen/PacketGen/Header/IPv6](http://rubydoc.info/gems/packetgen/PacketGen/Header/IPv6).
 
->>>>>>> 4a29f7680eb289e9cefb0a2055a9e76eef6c22c7:protocol-usecases/ipv6.md
+> > > > > > > 4a29f7680eb289e9cefb0a2055a9e76eef6c22c7:protocol-usecases/ipv6.md
+

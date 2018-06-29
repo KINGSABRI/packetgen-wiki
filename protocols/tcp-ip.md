@@ -335,10 +335,6 @@ pkt.tcp.options.each do |opt|
 end
 ```
 
-<<<<<<< HEAD:use-cases/TCP-IP.md
-See also http://rubydoc.info/gems/packetgen/PacketGen/Header/TCP.
-
-=======
 See also [http://rubydoc.info/gems/packetgen/PacketGen/Header/TCP](http://rubydoc.info/gems/packetgen/PacketGen/Header/TCP).
 
 ### TCP and UDP headers
@@ -374,7 +370,8 @@ pg> pkt
              Int16  urg_pointer: 0          (0x0000)
            Options      options:
 ```
->>>>>>> 4a29f7680eb289e9cefb0a2055a9e76eef6c22c7:protocol-usecases/tcp-ip.md
+
+
 
 ## Sending packets
 
