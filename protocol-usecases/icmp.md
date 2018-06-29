@@ -1,8 +1,8 @@
-# ICMP header
+# ICMP
 
 A ICMP header consists of:
 
-```
+```text
                      1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+-------------------------------+
@@ -10,14 +10,14 @@ A ICMP header consists of:
 +---------------+---------------+-------------------------------+
 ```
 
-* 8-bit type (`ICMP#type`),
-* 8-bit code (`ICMP#code`),
-* 16-bit checksum (`ICMP#checksum`),
-* and a body (`ICMP#body`).
+* 8-bit type \(`ICMP#type`\),
+* 8-bit code \(`ICMP#code`\),
+* 16-bit checksum \(`ICMP#checksum`\),
+* and a body \(`ICMP#body`\).
 
 A ICMP header may be built this way:
 
-```
+```text
 pg> PacketGen::Header::ICMP.new(type: 8, code: 0, body: 'PING!')
 => ---- PacketGen::Header::ICMP -----------------------------------------
               Int8         type: 8          (0x08)
@@ -41,10 +41,9 @@ pkt.body              # => "PING!"
 pkt.udp.type = 0 # This is now a pong!
 ```
 
-As usual, `checksum` field may be computed by `Header::ICMP#calc_sum`.
-All checksum and length fields from a packet may by computed at once using `pkt.calc`:
+As usual, `checksum` field may be computed by `Header::ICMP#calc_sum`. All checksum and length fields from a packet may by computed at once using `pkt.calc`:
 
-```
+```text
 pg> pkt.calc
 pg> pkt
 => -- PacketGen::Packet -------------------------------------------------
@@ -75,4 +74,5 @@ pg> pkt
 ----------------------------------------------------------------------
 ```
 
-See also http://rubydoc.info/gems/packetgen/PacketGen/Header/ICMP.
+See also [http://rubydoc.info/gems/packetgen/PacketGen/Header/ICMP](http://rubydoc.info/gems/packetgen/PacketGen/Header/ICMP).
+

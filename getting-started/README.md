@@ -1,8 +1,10 @@
+# Getting Started
+
 ## Install PacketGen
 
 Use rubygem:
 
-```
+```text
 $ gem install packetgen
 ```
 
@@ -14,10 +16,9 @@ gem packetgen
 
 ## Starting PacketGen
 
-The easiest way to start PacketGen is using interactive console. To send packets,
-root privileges are needed. In a terminal, do:
+The easiest way to start PacketGen is using interactive console. To send packets, root privileges are needed. In a terminal, do:
 
-```
+```text
 $ sudo pgconsole
 
 pgconsole uses IRB
@@ -31,7 +32,7 @@ pg>
 
 Build a packet and play with it:
 
-```
+```text
 pg> pkt = gen('IP', ttl: 1)
 => -- PacketGen::Packet -------------------------------------------------
 ---- PacketGen::Header::IP -------------------------------------------
@@ -75,24 +76,18 @@ pg> pkt.ip
               Addr          src: 192.168.0.200
               Addr          dst: 192.168.0.1
 
-pg> 
-
+pg>
 ```
 
-Here, `gen` (a shortcut to `PacketGen.gen`) generate a `PacketGen::Packet` object
-with a IP header.
+Here, `gen` \(a shortcut to `PacketGen.gen`\) generate a `PacketGen::Packet` object with a IP header.
 
-Then, IP header is accessed and/or modified to `#ip` method, which returns a
-`PacketGen::Header::IP` object (mapping of a IP header).
+Then, IP header is accessed and/or modified to `#ip` method, which returns a `PacketGen::Header::IP` object \(mapping of a IP header\).
 
 ### Put layers together
 
-To add layers to a packet, `PacketGen::Packet#add` method should be used.
-Adding a header on a  packet may update fields from underlying packet. Here,
-adding a TCP header to our IP packet will update protocol field to 6 (TCP
-protocol number):
+To add layers to a packet, `PacketGen::Packet#add` method should be used. Adding a header on a packet may update fields from underlying packet. Here, adding a TCP header to our IP packet will update protocol field to 6 \(TCP protocol number\):
 
-```
+```text
 pg> pkt.add('TCP')
 => -- PacketGen::Packet -------------------------------------------------
 ---- PacketGen::Header::IP -------------------------------------------
@@ -124,12 +119,12 @@ pg> pkt.add('TCP')
              Int16  urg_pointer: 0          (0x0000)
            Options      options: 
 
-pg> 
+pg>
 ```
 
 `#add` may be chained:
 
-```
+```text
 pg> pkt = gen('Eth').add('IP', src: '1.1.1.1', dst: '2.2.2.2').add('TCP', dport: 80)
 => -- PacketGen::Packet -------------------------------------------------
 ---- PacketGen::Header::Eth ------------------------------------------
@@ -165,12 +160,12 @@ pg> pkt = gen('Eth').add('IP', src: '1.1.1.1', dst: '2.2.2.2').add('TCP', dport:
              Int16  urg_pointer: 0          (0x0000)
            Options      options: 
 
-pg> 
+pg>
 ```
 
 You may also add whatever you want as packet body:
 
-```
+```text
 pg> pkt.body = "GET / HTTP1.0\r\n\r\n"
 => "GET / HTTP1.0\r\n\r\n"
 pg> pkt
@@ -213,15 +208,14 @@ pg> pkt
  47 45 54 20 2f 20 48 54 54 50 31 2e 30 0d 0a 0d  GET / HTTP1.0...
  0a                                               .
 ----------------------------------------------------------------------
-pg> 
+pg>
 ```
 
 ### Generate binary data and read packets
 
-From a pcket, you may generate binary data which will be sent on network. You may
-also parse binary data to create packets:
+From a pcket, you may generate binary data which will be sent on network. You may also parse binary data to create packets:
 
-```
+```text
 pg> str = pkt.to_s
 => "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\b\x00E\x00\x00\x14{\xF1\x00\x00@\x06\x00\x00\x01\x01\x01\x01\x02\x02\x02\x02\x00\x00\x00P\x17\x83\x80\xA3\x00\x00\x00\x00P\x00\x00\x00\x00\x00\x00\x00GET / HTTP1.0\r\n\r\n"
 pg> parse(str)
@@ -264,26 +258,25 @@ pg> parse(str)
  47 45 54 20 2f 20 48 54 54 50 31 2e 30 0d 0a 0d  GET / HTTP1.0...
  0a                                               .
 ----------------------------------------------------------------------
-
 ```
 
 ### Read and write files
 
 You may read packets from PCAP or PCAP-NG files:
 
-```
+```text
 pg> array_of_packets = read('file.pcap')
 ```
 
-You also may write packets to a file (only PCAP-NG is supported):
+You also may write packets to a file \(only PCAP-NG is supported\):
 
-```
+```text
 pg> write('file.pcapng', array_of_packets)
 ```
 
 Or write a single packet to a file:
 
-```
+```text
 pg> packet.to_f('file.pcapng')
 ```
 
@@ -291,22 +284,19 @@ pg> packet.to_f('file.pcapng')
 
 Sendind a packet is as easy as:
 
-```
+```text
 pg> pkt.to_w
 ```
 
-The packet will be send on your first network interface. You also may choose
-interface on which sends packet:
+The packet will be send on your first network interface. You also may choose interface on which sends packet:
 
-```
+```text
 pg> pkt.to_w('eth1')
 ```
 
-In general, packets are erroneous because some fields are not properly set. To
-easily fix that, use `PacketGen::Packet#calc`, which will calculte all calculatable
-fields (for now: length and checksum ones):
+In general, packets are erroneous because some fields are not properly set. To easily fix that, use `PacketGen::Packet#calc`, which will calculte all calculatable fields \(for now: length and checksum ones\):
 
-```
+```text
 pg> pkt.calc
 pg> pkt.to_w
 ```
@@ -317,7 +307,7 @@ Of course, this is to you to put correct values for addresses or ports, by examp
 
 You may capture packets to post-process them:
 
-```
+```text
 pg> packets = capture(iface: 'eth0', max: 50, timeout: 10)
 ```
 
@@ -325,7 +315,7 @@ This command will captute at most 50 packets from eth0, during at most 10 second
 
 You also may process them on the fly:
 
-```
+```text
 pg> capture(iface: 'eth0', max: 5, timeout: 10) do |pkt|
 pg*     p pkt
 irb(#<PgConsole:0x0055d20a9812a0>):004:1> end
@@ -333,7 +323,7 @@ irb(#<PgConsole:0x0055d20a9812a0>):004:1> end
 
 Captured packets may be filetered using a tcpdump filter:
 
-```
+```text
 pg> packets = capture(iface: 'eth0', max: 50, filter: 'ip dst 192.168.1.1')
 ```
 
@@ -341,5 +331,5 @@ pg> packets = capture(iface: 'eth0', max: 50, filter: 'ip dst 192.168.1.1')
 
 Read others pages from this wiki.
 
-[API documentation](http://www.rubydoc.info/gems/packetgen/) also gives all
-methods for `PacketGen::Packet` and for all header classes.
+[API documentation](http://www.rubydoc.info/gems/packetgen/) also gives all methods for `PacketGen::Packet` and for all header classes.
+

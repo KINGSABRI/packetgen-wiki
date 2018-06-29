@@ -1,24 +1,34 @@
+---
+description: Transmission Control Protocol (TCP) / Internet Protocol (IP)
+---
+
+# TCP IP
+
 This page describes the use of PacketGen with TCP/IP stack.
 
 ## Mastering IP stack protocols
 
-The IP stack (or TCP/IP stack) is a network stack based on IP protocol, which is a
-network level (level 3 in [OSI model](https://en.wikipedia.org/wiki/OSI_model)).
+The IP stack \(or TCP/IP stack\) is a network stack based on IP protocol, which is a network level \(level 3 in [OSI model](https://en.wikipedia.org/wiki/OSI_model)\).
 
-IP is itself often used with a higher protocol (transport level, or level 4):
+IP is itself often used with a higher protocol \(transport level, or level 4\):
 
-* Transmission Control Protocol (TCP), which provides reliable, ordered, and error-checked
+* Transmission Control Protocol \(TCP\), which provides reliable, ordered, and error-checked
+
   delivery of a stream of octets between applications running on hosts communicating by an
+
   IP network,
-* User Datagram Protocol (UDP), which is simpler than TCP: this is a connection-less
+
+* User Datagram Protocol \(UDP\), which is simpler than TCP: this is a connection-less
+
   protocol with a minimum of protocol mechanisms. It provides checksums for data integrity
+
   but is not reliable, there is no guarantee of ordering delivery.
 
 ### IP header
 
 A IP header consists of a set of fields:
 
-```
+```text
                      1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-------+-------+---------------+-------------------------------+
@@ -36,31 +46,37 @@ A IP header consists of a set of fields:
 +---------------------------------------------------------------+
 ```
 
-* 4-bit protocol version (`IP#version`). Attended value is 4 for IPv4,
-* 4-bit IP header length (`IP#ihl). Size of IP header in 32-bit words. As a IP header
+* 4-bit protocol version \(`IP#version`\). Attended value is 4 for IPv4,
+* 4-bit IP header length \(\`IP\#ihl\). Size of IP header in 32-bit words. As a IP header
+
   is 20 bytes long, this value should be 5. It may be greater if header has options,
+
   but options are not supported by PacketGen,
-* 8-bit type of service (`IP#tos`),
-* 16-bit total length (`IP#length`), size of IP packet, including the header,
-* 16-bit ID (`IP#id`),
-* 16-bit fragment word (`IP#frag`), used for IP fragmentation, composed of:
+
+* 8-bit type of service \(`IP#tos`\),
+* 16-bit total length \(`IP#length`\), size of IP packet, including the header,
+* 16-bit ID \(`IP#id`\),
+* 16-bit fragment word \(`IP#frag`\), used for IP fragmentation, composed of:
   * 3 1-bit flags:
-    * a reserved bit (`IP#flag_rsv`),
-    * don't fragment flag (`IP#flag_df`) to forbid fragmentation of this packet,
-    * more fragment flag (`IP#flag_mf`) to indicate a fragment, which is not the last
+    * a reserved bit \(`IP#flag_rsv`\),
+    * don't fragment flag \(`IP#flag_df`\) to forbid fragmentation of this packet,
+    * more fragment flag \(`IP#flag_mf`\) to indicate a fragment, which is not the last
+
       one, of a IP packt,
-  * a 13-bit fragment offset (`IP#fragment_offset`),
-* 8-bit time to live (`IP#ttl`),
-* 8-bit protocol (`IP#protocol`) to indicate upper protocol (6 for TCP, and 17 for UDP
-  by example),
-* 16-bit checksum (`IP#checksum`) of all IP packet,
-* 32-bit source IP address (`IP#src`),
-* 32-bit destination IP address (`IP#dst`),
-* a body (`IP#body`) containing data conveyed by IP.
+  * a 13-bit fragment offset \(`IP#fragment_offset`\),
+* 8-bit time to live \(`IP#ttl`\),
+* 8-bit protocol \(`IP#protocol`\) to indicate upper protocol \(6 for TCP, and 17 for UDP
+
+  by example\),
+
+* 16-bit checksum \(`IP#checksum`\) of all IP packet,
+* 32-bit source IP address \(`IP#src`\),
+* 32-bit destination IP address \(`IP#dst`\),
+* a body \(`IP#body`\) containing data conveyed by IP.
 
 A IP header may be built this way:
 
-```
+```text
 pg> PacketGen::Header::IP.new(ttl: 32, src: '10.0.0.1', dst: '20.0.0.1', flag_df: true)
 => ---- PacketGen::Header::IP -------------------------------------------
               Int8           u8: 69         (0x45)
@@ -106,12 +122,9 @@ pkt.body = 'This is a body'
 pkt.length            # => 20
 ```
 
-As you can see, `checksum` and `length` are not automatically set to correct values. But
-they may be set easily with `IP#calc_sum`, which computes checksum, and `IP#calc_length`
-which set correct length (taking care of body length). `Packet#calc` may be used too:
-it automatically call `#calc_sum` and `#calc_length` on all headers responding to them:
+As you can see, `checksum` and `length` are not automatically set to correct values. But they may be set easily with `IP#calc_sum`, which computes checksum, and `IP#calc_length` which set correct length \(taking care of body length\). `Packet#calc` may be used too: it automatically call `#calc_sum` and `#calc_length` on all headers responding to them:
 
-```
+```text
 pg> pkt.calc
 pg> pkt
 => -- PacketGen::Packet -------------------------------------------------
@@ -137,13 +150,13 @@ pg> pkt
 ----------------------------------------------------------------------
 ```
 
-See also http://rubydoc.info/gems/packetgen/PacketGen/Header/IP.
+See also [http://rubydoc.info/gems/packetgen/PacketGen/Header/IP](http://rubydoc.info/gems/packetgen/PacketGen/Header/IP).
 
 ### TCP header
 
 A TCP header consists of:
 
-```
+```text
                      1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-------------------------------+-------------------------------+
@@ -163,25 +176,27 @@ A TCP header consists of:
 +---------------------------------------------------------------+
 ```
 
-* 16-bit source port (`TCP#sport`),
-* 16-bit destination port (`TCP#dport`),
-* 32-bit sequence number (`TCP#seqnum`),
-* 32-bit acknowledge number (`TCP#acknum`),
-* a 16-bit field (`TCP#u16`) composed og:
-  * 4-bit data offset (`TCP#data_offset`),
-  * 3-bit reserved field (`TCP#reserved`),
-  * 9 1-bit flags (`TCP#flags` or `TCP#flag_ns`, `TCP#flag_cwr`, `TCP#flag_ece`,
+* 16-bit source port \(`TCP#sport`\),
+* 16-bit destination port \(`TCP#dport`\),
+* 32-bit sequence number \(`TCP#seqnum`\),
+* 32-bit acknowledge number \(`TCP#acknum`\),
+* a 16-bit field \(`TCP#u16`\) composed og:
+  * 4-bit data offset \(`TCP#data_offset`\),
+  * 3-bit reserved field \(`TCP#reserved`\),
+  * 9 1-bit flags \(`TCP#flags` or `TCP#flag_ns`, `TCP#flag_cwr`, `TCP#flag_ece`,
+
     `TCP#flag_urg`, `TCP#flag_ack`, `TCP#flag_psh`, `TCP#flag_rst`, `TCP#flag_syn` and
-    `TCP#flag_fin`),
-* 16-bit window size (`TCP#window`),
-* 16-bit checksum (`TCP#checksum`),
-* 16-bit urgent pointer (`TCP#urg_pointer`),
-* an optional options field (`TCP#options`),
-* and a body (`TCP#body`).
+
+    `TCP#flag_fin`\),
+* 16-bit window size \(`TCP#window`\),
+* 16-bit checksum \(`TCP#checksum`\),
+* 16-bit urgent pointer \(`TCP#urg_pointer`\),
+* an optional options field \(`TCP#options`\),
+* and a body \(`TCP#body`\).
 
 A TCP header may be built this way:
 
-```
+```text
 pg> PacketGen::Header::TCP.new(dport: 80, sport: 32768 + rand(2**15))
 => ---- PacketGen::Header::TCP ------------------------------------------
              Int16        sport: 43959      (0xabb7)
@@ -196,7 +211,6 @@ pg> PacketGen::Header::TCP.new(dport: 80, sport: 32768 + rand(2**15))
              Int16     checksum: 0          (0x0000)
              Int16  urg_pointer: 0          (0x0000)
            Options      options:
-
 ```
 
 If not specified, `seqnum` is a random value.
@@ -234,10 +248,9 @@ pkt.tcp.flag_rst = true
 pkt.tcp.sport = 44444
 ```
 
-`checksum` field may be computed by `Header::TCP#calc_sum`. All checksum and length fields
-from this packet may by computed at once using `pkt.calc`:
+`checksum` field may be computed by `Header::TCP#calc_sum`. All checksum and length fields from this packet may by computed at once using `pkt.calc`:
 
-```
+```text
 pg> pkt.calc
 pg> pkt
 => -- PacketGen::Packet -------------------------------------------------
@@ -274,7 +287,7 @@ pg> pkt
 
 TCP options may be easily added:
 
-```
+```text
 pg> pkt.tcp.options << { opt: 'MSS', value: 1250 }
 pg> pkt.tcp.options << { opt: 'NOP' }
 pg> pkt
@@ -322,9 +335,7 @@ pkt.tcp.options.each do |opt|
 end
 ```
 
-See also http://rubydoc.info/gems/packetgen/PacketGen/Header/TCP.
-
-
+See also [http://rubydoc.info/gems/packetgen/PacketGen/Header/TCP](http://rubydoc.info/gems/packetgen/PacketGen/Header/TCP).
 
 ### TCP and UDP headers
 
@@ -362,10 +373,9 @@ pg> pkt
 
 ## Sending packets
 
-IP packets may be sent at link level (Ethernet, IEEE 802.11) or at network one (IP).
+IP packets may be sent at link level \(Ethernet, IEEE 802.11\) or at network one \(IP\).
 
-So, if you want to generate IP packets and let your OS route them, create packets at
-IP level:
+So, if you want to generate IP packets and let your OS route them, create packets at IP level:
 
 ```ruby
 pkt = PacketGen.gen('IP', src: '192.168.1.1', '192.168.1.101').add('TCP', dport: 80)
@@ -397,4 +407,6 @@ Captured packets will always have a link level header:
 
 * `Eth` one for packets captured from an ethernet interface,
 * `RadioTap` or `Dot11` one for packets captured from a IEEE 802.11 interface.
+
   If RadioTap header is present, il will always be followed by a Dot11 one.
+

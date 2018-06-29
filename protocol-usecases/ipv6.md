@@ -1,8 +1,8 @@
-# IPv6 header
+# IPv6
 
 A IPv6 header consists of a set of fields:
 
-```
+```text
                      1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 3 3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-------+---------------+---------------------------------------+
@@ -22,20 +22,22 @@ A IPv6 header consists of a set of fields:
 +---------------------------------------------------------------+
 ```
 
-* 4-bit protocol version (`IPV6#version`). Attended value is 6 for IPv6,
-* 8-bit traffic class (`IPV6#traffic_class),
-* 20-bit flow label (`IPv6#flow_label`),
-* 16-bit payload length (`IPV6#length`), size of IPV6 payload, excluding the header,
-* 8-bit next header (`IPV6#next`) to indicate upper protocol (6 for TCP, and 17 for UDP
-  by example, but this may also be IPv6 options),
-* 8-bit hop-limit (`IPV6#hop`),
-* 128-bit source IPV6 address (`IPV6#src`),
-* 128-bit destination IPV6 address (`IPV6#dst`),
-* a body (`IPV6#body`) containing data conveyed by IPv6.
+* 4-bit protocol version \(`IPV6#version`\). Attended value is 6 for IPv6,
+* 8-bit traffic class \(\`IPV6\#traffic\_class\),
+* 20-bit flow label \(`IPv6#flow_label`\),
+* 16-bit payload length \(`IPV6#length`\), size of IPV6 payload, excluding the header,
+* 8-bit next header \(`IPV6#next`\) to indicate upper protocol \(6 for TCP, and 17 for UDP
+
+  by example, but this may also be IPv6 options\),
+
+* 8-bit hop-limit \(`IPV6#hop`\),
+* 128-bit source IPV6 address \(`IPV6#src`\),
+* 128-bit destination IPV6 address \(`IPV6#dst`\),
+* a body \(`IPV6#body`\) containing data conveyed by IPv6.
 
 A IPV6 header may be built this way:
 
-```
+```text
 pg> PacketGen::Header::IPv6.new(hop: 32, src: '::1', dst: '::1')
 => ---- PacketGen::Header::IPv6 -----------------------------------------
              Int32          u32: 1610612736 (0x60000000)
@@ -48,7 +50,6 @@ pg> PacketGen::Header::IPv6.new(hop: 32, src: '::1', dst: '::1')
               Addr          src: ::1
               Addr          dst: ::1
 ```
-
 
 A IPv6 packet may be created this way:
 
@@ -71,12 +72,9 @@ pkt.body = 'This is a body'
 pkt.length            # => 0
 ```
 
-As you can see, `length` is not automatically set to correct value. But it may be set
-easily with `IPv6#calc_length`.
-`Packet#calc` may be used too: it automatically call `#calc_sum` and `#calc_length` on
-all headers responding to them:
+As you can see, `length` is not automatically set to correct value. But it may be set easily with `IPv6#calc_length`. `Packet#calc` may be used too: it automatically call `#calc_sum` and `#calc_length` on all headers responding to them:
 
-```
+```text
 pg> pkt.calc
 pg> pkt
 => -- PacketGen::Packet -------------------------------------------------
@@ -97,4 +95,5 @@ pg> pkt
 ----------------------------------------------------------------------
 ```
 
-See also http://rubydoc.info/gems/packetgen/PacketGen/Header/IPv6.
+See also [http://rubydoc.info/gems/packetgen/PacketGen/Header/IPv6](http://rubydoc.info/gems/packetgen/PacketGen/Header/IPv6).
+

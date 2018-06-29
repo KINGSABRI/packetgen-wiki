@@ -1,16 +1,14 @@
-# ICMPv6 header
+# ICMPv6
 
-IPv6 comes with a new version of ICMP: ICMPv6 (yes!).
+IPv6 comes with a new version of ICMP: ICMPv6 \(yes!\).
 
-ICMPv6 has the same header than ICMP, but type and code have different meanings. And
-ICMPv6 has not the same protocol number than ICMP.
+ICMPv6 has the same header than ICMP, but type and code have different meanings. And ICMPv6 has not the same protocol number than ICMP.
 
-In fact, ICMPv6 supports much more features than ICMP, but at packet level, there is no
-such differences.
+In fact, ICMPv6 supports much more features than ICMP, but at packet level, there is no such differences.
 
 Adding a ICMPv6 header to an IPv6 packet is easy:
 
-```
+```text
 pg> pkt = PacketGen.gen('IPv6', src: '::1', dst: '::1')
 pg> pkt.add('ICMPv6', type: 128, code: 0, body: 'ping')
 pg> pkt.calc
@@ -37,4 +35,5 @@ pg> pkt
 ----------------------------------------------------------------------
 ```
 
-See also http://rubydoc.info/gems/packetgen/PacketGen/Header/ICMPv6.
+See also [http://rubydoc.info/gems/packetgen/PacketGen/Header/ICMPv6](http://rubydoc.info/gems/packetgen/PacketGen/Header/ICMPv6).
+

@@ -1,84 +1,76 @@
-SNMP is quite different from others protocols: it uses
-[ASN.1](https://en.wikipedia.org/wiki/ASN.1) data structures.
-So, to understand SNMP serialization/deserialization, you need to understand
-ASN.1.
+---
+description: Simple Network Management Protocol (SNMP)
+---
+
+# SNMP
+
+SNMP is quite different from others protocols: it uses [ASN.1](https://en.wikipedia.org/wiki/ASN.1) data structures. So, to understand SNMP serialization/deserialization, you need to understand ASN.1.
 
 ## ASN.1
 
-ASN.1 is an interface description language for defining data structures that
-can be serialized and deserialized in a standard and cross-platform way. It is
-broadly used in telecommunications and computer networking, and also in
-cryptography (X.509 certificates are defined with ASN.1, for example).
+ASN.1 is an interface description language for defining data structures that can be serialized and deserialized in a standard and cross-platform way. It is broadly used in telecommunications and computer networking, and also in cryptography \(X.509 certificates are defined with ASN.1, for example\).
 
-ASN.1 is a notation independent of the way data are encoded. Encoding are
-specified in Encoding Rules.
+ASN.1 is a notation independent of the way data are encoded. Encoding are specified in Encoding Rules.
 
-The most used encoding rules are BER (Basic Encoding Rules) and DER
-(Distinguished Encoding Rules). Both are quite equivalent, but the latter is
-specified to guaranty uniqueness of encoding. But, in fact, there are just
-little differences between them.
+The most used encoding rules are BER \(Basic Encoding Rules\) and DER \(Distinguished Encoding Rules\). Both are quite equivalent, but the latter is specified to guaranty uniqueness of encoding. But, in fact, there are just little differences between them.
 
-ASN.1 provides basic objects, such as: integers, many kinds of strings, floats,
-booleans. It also provides some container objects (sequences and sets). They all
-are defined in Universal class. A protocol may defined others objects, which
-will be grouped in the Context class.For example, SNMP defines GetRequest-PDU
-object in this class. They also exist Private and Application classes.
+ASN.1 provides basic objects, such as: integers, many kinds of strings, floats, booleans. It also provides some container objects \(sequences and sets\). They all are defined in Universal class. A protocol may defined others objects, which will be grouped in the Context class.For example, SNMP defines GetRequest-PDU object in this class. They also exist Private and Application classes.
 
-Each basic object has a tag, used by the encoding rules. For example, Boolean
-has tag value 1, Integer has tag value 2.
-In context class, tags begin at 0xA0. For example, in SNMP context, 0xA0 tag is
-a GetRequest-PDU.
+Each basic object has a tag, used by the encoding rules. For example, Boolean has tag value 1, Integer has tag value 2. In context class, tags begin at 0xA0. For example, in SNMP context, 0xA0 tag is a GetRequest-PDU.
 
-Others objects may be constructed from those basic ones using Sequences and Sets.
-Sequences are like ruby arrays. Sets are arrays limited to a unique object type.
+Others objects may be constructed from those basic ones using Sequences and Sets. Sequences are like ruby arrays. Sets are arrays limited to a unique object type.
 
-Finally, a ASN.1 object is a tree, whose leafs are basic types, and non-leaf nodes
-are Sets or Sequences.
+Finally, a ASN.1 object is a tree, whose leafs are basic types, and non-leaf nodes are Sets or Sequences.
 
 ### ASN.1 in PacketGen
 
-In PacketGen, ASN.1 objetcs are handled using `rasn1` gem. This gem defines
-basic ASN.1 objets and provides ways to decode and encode data in DER and BER
-encodings.
+In PacketGen, ASN.1 objetcs are handled using `rasn1` gem. This gem defines basic ASN.1 objets and provides ways to decode and encode data in DER and BER encodings.
 
 ### rasn1 gem
 
-rasn1 gem provides a `RASN1::Model` class to define complex ASN.1 objects. See
-[Rasn1 wiki](https://github.com/sdaubert/rasn1/wiki) for a simple example.
+rasn1 gem provides a `RASN1::Model` class to define complex ASN.1 objects. See [Rasn1 wiki](https://github.com/sdaubert/rasn1/wiki) for a simple example.
 
 ## SNMP
 
-In PacketGen, `SNMP` header inherits from `PacketGen::Header::ASN1Base`, which
-inherits from `RASN1::Model`.
-`Header::ASN1Base` provides [[Header minimal API|Create Custom Protocol#Header
-minimal API]].
+In PacketGen, `SNMP` header inherits from `PacketGen::Header::ASN1Base`, which inherits from `RASN1::Model`. `Header::ASN1Base` provides \[\[Header minimal API\|Create Custom Protocol\#Header minimal API\]\].
 
 Some ASN1. objets are also defined in `PacketGen::Header::SNMP` namespace:
 
 * [`PDUs`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/PDUs),
+
   which is a CHOICE between all SNMP PDUs,
+
 * [`GetRequest`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/GetRequest),
+
   which is the model of a SNMP Get request,
+
 * [`GetNextRequest`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/GetNextRequest),
 * [`GetResponse`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/GetResponse),
 * [`SetRequest`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/SetRequest),
 * [`Trapv1`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/Trapv1),
+
   which is Trap PDU for SNMPv1,
+
 * [`Bulk`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/Bulk),
 * [`InformRequest`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/InformRequest),
 * [`Trapv2`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/Trapv2),
+
   which is Trap PDU for SNMPv2,
+
 * [`Report`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/Report),
 * [`VariableBindings`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/VariableBindings),
-  which is a SEQUENCE OF (an array of) `VarBind`. This class is used in PDU classes,
+
+  which is a SEQUENCE OF \(an array of\) `VarBind`. This class is used in PDU classes,
+
 * [`VarBind`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP/VarBind),
-  which is an association between a name (as an OBJECT ID) and a value (its type
-    depends on its name).
+
+  which is an association between a name \(as an OBJECT ID\) and a value \(its type
+
+    depends on its name\).
 
 ### SNMP base class
 
-[`SNMP`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP) class
-is a simple ASN.1 object defined like this:
+[`SNMP`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/SNMP) class is a simple ASN.1 object defined like this:
 
 ```ruby
 class SNMP < ASN1Base
@@ -92,13 +84,14 @@ end
 
 which is equivalent to this ASN.1 definition:
 
-```
+```text
 Message ::= SEQUENCE {
                 version INTEGER { version-1(0), version-2c(1), version-2(2), version-3(3) },
                 community OCTET STRING,
                 data ANY        -- Here is PDU
             }
 ```
+
 All objects may be accessed to `#[]` accessor:
 
 ```ruby
@@ -111,8 +104,7 @@ snmp[:community].value     # => "public"
 snmp[:data]                # => PacketGen::Header::SNMP::PDUs
 ```
 
-For convenience, these upper fields are accessible through accessors, as for
-others headers:
+For convenience, these upper fields are accessible through accessors, as for others headers:
 
 ```ruby
 snmp.version = 0
@@ -124,11 +116,12 @@ snmp.commutiyy = 'private'
 
 snmp.data             # => PacketGen::Header::SNMP::PDUs
 ```
+
 ### SNMP::PDUs class
 
 In RFC, PDUs is defined as:
 
-```
+```text
 PDUs ::= CHOICE {
            get-request      [0] IMPLICIT PDU,
            get-next-request [1] IMPLICIT PDU,
@@ -144,7 +137,7 @@ PDUs ::= CHOICE {
 
 `SNMP::PDUs` class is defined as a subclass of `RASN1::Model`, and as a CHOICE.
 
-Setting header type (or PDU type) may be done this way:
+Setting header type \(or PDU type\) may be done this way:
 
 ```ruby
 smp.data.root                # access to root ASN.1 object in PDU class
@@ -153,8 +146,7 @@ snmp.data.root.chosen = 0    # Choose first CHOICE from PDUs: SNMP::GetRequest
 snmp.data.root.chosen_value  # => PacketGen::Header::SNMP::GetRequest
 ```
 
-As RASN1::Model may delegate some methods to its root object, we can simplify
-previous code:
+As RASN1::Model may delegate some methods to its root object, we can simplify previous code:
 
 ```ruby
 smp.data.root             # access to root ASN.1 object in PDU class
@@ -165,12 +157,11 @@ snmp.data.chosen_value    # => PacketGen::Header::SNMP::GetRequest
 snmp.pdu                  # => PacketGen::Header::SNMP::GetRequest
 ```
 
-
 ### SNMP::GetRequest class
 
 GetRequest PDU is defined as:
 
-```
+```text
 GetRequest-PDU ::= [0] IMPLICIT PDU
 
 PDU ::= SEQUENCE {
@@ -198,10 +189,10 @@ PDU ::= SEQUENCE {
                     notWritable(17),
                     inconsistentName(18)
                 },
-        
+
             error-index                 -- sometimes ignored
                 INTEGER (0..max-bindings),
-        
+
             variable-bindings           -- values are sometimes ignored
                 VarBindList
         }
@@ -270,7 +261,7 @@ snmp.pdu                     # => PacketGen::Header::SNMP::SetRequest
 
 `Trapv1` PDU is defined as:
 
-```
+```text
 Trap-PDU ::= [4] IMPLICIT SEQUENCE {
                         enterprise OBJECT IDENTIFIER,
                         agent-addr NetworkAddress,
@@ -365,3 +356,4 @@ ir.data.chosen = 8
 ```
 
 Report is a subclass of GetRequest, so it has the same accessors.
+
