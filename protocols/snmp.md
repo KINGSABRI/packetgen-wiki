@@ -145,7 +145,7 @@ snmp.data.root.chosen_value  # => PacketGen::Header::SNMP::GetRequest
 As RASN1::Model may delegate some methods to its root object, we can simplify previous code:
 
 ```ruby
-smp.data.root             # access to root ASN.1 object in PDU class
+snmp.data.root             # access to root ASN.1 object in PDU class
                           # => RASN1::Types::CHOICE
 snmp.data.chosen = 0      # Choose first CHOICE from PDUs: SNMP::GetRequest
 snmp.data.chosen_value    # => PacketGen::Header::SNMP::GetRequest
@@ -317,7 +317,7 @@ Bulk accessors:
 bulk.pdu[:id]                # => RASN1::Types::Integer
 bulk.pdu[:non_repeaters]     # => RASN1::Types::Integer
 bulk.pdu[:max_repetitions]   # => RASN1::Types::Integer
-bulk.pdu[:varbindlist        # => PacketGen::Header::SNMP::VariableBindings
+bulk.pdu[:varbindlist]       # => PacketGen::Header::SNMP::VariableBindings
 ```
 
 ### SNMP::InformRequest class
