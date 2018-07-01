@@ -16,8 +16,8 @@ A packet \([`PacketGen::Packet`](http://www.rubydoc.info/gems/packetgen/PacketGe
 
 A packet consists of:
 
-* an array containing headers \(`PacketGen::PAcket#headers`\),
-* a body \(`PacketGen::PAcket#body`, which is a shortcut to last header's body\).
+* an array containing headers \(`PacketGen::Packet#headers`\),
+* a body \(`PacketGen::Packet#body`, which is a shortcut to last header's body\).
 
 Packet class also provides methods to interact with packets:
 
