@@ -4,7 +4,7 @@ PacketGen uses 3 primary concepts:
 
 * a packet is an object describing a network packet,
 * a header is an object describing a network protocol,
-* a type is a basic or composed type. A composed type is a type based on one or
+* a field is of a basic or composed type. A composed type is a type based on one or
 
   more others composed types or basic types.
 
@@ -37,7 +37,7 @@ Most of headers are based on PacketGen types. They contain fields. Each field is
 
 Some headers may contain others headers. Such headers should have a `#body` field to handle inner headers.
 
-Some protocols use length fields and/or checksum fields. To permit computation of these fields at once through `PacketGen::Packet#calc`, these fiels should be named `#length` and `#checksum`, respectively.
+Some protocols use length fields and/or checksum fields. To permit computation of these fields at once through `PacketGen::Packet#calc`, these fields should be named `#length` and `#checksum`, respectively.
 
 Most of PacketGen header classes inherit from [`PacketGen::Header::Base`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/Base) class. This class implements [minimal API](https://github.com/sdaubert/packetgen/wiki/Create-Custom-Protocol#header-minimal-api) needed to parse packets and add headers to packets.
 
