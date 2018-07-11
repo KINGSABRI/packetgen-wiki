@@ -1,6 +1,6 @@
 # Create Custom Protocol
 
-Since v1.1.0, PacketGen allows you adding your own header classes.
+PacketGen allows you adding your own header classes.
 
 ## Quick start
 
@@ -9,8 +9,8 @@ To add a new/custom header, you first have to define the new header class. For e
 ```ruby
 module MyModule
  class MyHeader < PacketGen::Header::Base
-   define_field :field1, PacketGen::Types::Int32   
-   define_field :field2, PacketGen::Types::Int32   
+   define_field :field1, PacketGen::Types::Int32
+   define_field :field2, PacketGen::Types::Int32
  end
 end
 ```
@@ -39,7 +39,7 @@ pkt.myheader.field2.read 0x01
 
 ### Define a header class
 
-A new header class should inherit from [`PacketGen::Header::Base`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/Base) class \(or from `PacketGen::Header::ASN1Base` but this is off topic\). This base class implements minimal API \(see [below](create-custom-protocol.md#header-minimal-api)\) to parse a header from binary string, or to generate binary string from a header class.
+A new header class should inherit from [`PacketGen::Header::Base`](http://www.rubydoc.info/gems/packetgen/PacketGen/Header/Base) class \(or from `PacketGen::Header::ASN1Base`, see [below](create-custom-protocol.md#add-a-new-asn-1-header)\). This base class implements minimal API \(see [below](create-custom-protocol.md#header-minimal-api)\) to parse a header from binary string, or to generate binary string from a header class.
 
 `PacketGen::Header::Base` inherits from [`PacketGen::Types::Fields`](http://www.rubydoc.info/gems/packetgen/PacketGen/Types/Fields), which is a class to define headers or anything else with a binary format containing multiple fields.
 
@@ -89,22 +89,7 @@ example.type = 1
 
 ### Builtin Types
 
-To create new Fields or Header classes, PacketGen provides some base types:
-
-* integers:
-  * `Int8`,
-  * big-endian integers: `Int16` or `Int16be`, `Int32` or `Int32be` and `Int64` or `Int64be`,
-  * little-endian integers: `Int16le`, `Int32le` and `Int64le`,
-* enumerated integers: `Int8Enum`, `Int16Enum`, `Int16beEnum`, `Int16leEnum`, `Int32Enum`, `Int32beEnum` and `Int32leEnum`,
-* strings: `String`, `IntString` \(a string with a length field at the beginning\)
-
-  and `CString` \(null-terminated string\),
-
-* arrays: `Array` to define set of fields,
-* `TLV` to define fields as set of type-length-value,
-* `OUI` \(_Organizationally Unique Identifier_\).
-
-All these types are defined under `PacketGen::Types` namespace.
+All builtin types are listed [here](../getting-started/packetgen-structure.md#types).
 
 ### Add some methods to a header class
 
@@ -112,7 +97,7 @@ By default, all fields will have accessors with the good type. By example, a `Ty
 
 But, for some reason, you may need to add another accessor, or a method to compute some protocol data.
 
-To do that, you have to understanf Fields model. A field may be accessed through its accessor, as already seen. But it may also be accessed through Fields' hash.
+To do that, you have to understand Fields model. A field may be accessed through its accessor, as already seen. But it may also be accessed through Fields' hash.
 
 Fields class defines `#[]` method to access to field object by its name. By example, with our previously defined ExampleHeader:
 
@@ -127,7 +112,7 @@ Sometimes, you will need to access real field object. All field objects have com
 * `#to_s` gives binary string from object,
 * `#sz` gives binary size.
 
-As an example of method to a header class, we will define one to calculate `first` field, which value should be size of custom field:
+As an example of method in a header class, we will define one to calculate `first` field, which value should be size of custom field:
 
 ```ruby
 class ExampleHeader
@@ -163,13 +148,13 @@ This definition uses lots of stuffs from [`rasn1`](https://github.com/sdaubert/r
   * an Octet String named `community`,
   * and a PDUClass \(subclass of [`RASN1::Model`](http://www.rubydoc.info/gems/rasn1/RASN1/Model)\) named `data` and not defined here.
 
-`define_attributes` is a helper method to declare attributes from some ASN.1 fields. This helps to mimic standard header behaviour.
+`define_attributes` is a helper method to declare attributes from some ASN.1 fields. This helps to mimic standard header behavior.
 
 ## Packet magics
 
 `PacketGen::Packet` defines some magics using specific header methods.
 
-If your header class has a checksum field and/or a length field, `Packet` provides magic for them. You have to define a `#calc_checksum` and/or a `calc_length` which appropriatly set checksum and/or length fields respectively. Then `Packet#calc_checksum` and `Packet#calc_length` will calculate all checksum and length fields in all headers, including yours.
+If your header class has a checksum field and/or a length field, `Packet` provides magic for them. You have to define a `#calc_checksum` and/or a `calc_length` which appropriately set checksum and/or length fields respectively. Then `Packet#calc_checksum` and `Packet#calc_length` will calculate all checksum and length fields in all headers, including yours.
 
 If your header class is not an application layer one, you should define a `body` field of type `PacketGen::Types::String`. This will allow `Packet#parse` to automagically parse headers embedded in yours. Same magic will happen for `Packet#to_s`, `Packet#encapsulate`, `Packet#decapsulate` and `Packet#add`.
 
@@ -194,6 +179,7 @@ A header MUST respond to:
   This name is used as accessor from packet to access header object,
 
 * `#read`: method to parse binary string and decode header,
+* `#to_s`: method to generate binary data of header to send on wire,
 * `#parse?`: return `true` if decoded header is correct. Used when guessing if
 
   header may be decoded from binary string. An example of use if checking first
