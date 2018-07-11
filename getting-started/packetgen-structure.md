@@ -49,22 +49,22 @@ Basic types are types used to construct headers or composed types. Basic types a
 
 | Type | Description |
 | :---: | :--- |
-| `Int8` | 8-bit integer |
-| `Int8Enum` | 8-bit enumerated integer |
-| `Int16`, `Int16be` | 16-bit big-endian integer |
-| `Int16Enum`, `Int16beEnum` | 16-bit big-endian enumerated integer |
-| `Int16le` | 16-bit little-endian integer |
-| `Int16leEnum` | 16-bit little-endian enumerated integer |
-| `Int32`, `Int32be` | 32-bit big-endian integer |
-| `Int32Enum`, `Int32beEnum` | 32-bit big-endian enumerated integer |
-| `Int32le` | 32-bit little-endian integer |
-| `Int32leEnum` | 32-bit little-endian enumerated integer |
-| `Int64`, `Int64be` | 64-bit big-endian integer |
-| `Int64le` | 64-bit little-endian integer |
-| `String` | binary string |
-| `CString` | null-terminated string |
-| `IntString` | binary string prepended with its field |
-| `Array` | container for types. May contain multiple values of a single type |
+| `Types::Int8` | 8-bit integer |
+| `Types::Int8Enum` | 8-bit enumerated integer |
+| `Types::Int16`, `Types::Int16be` | 16-bit big-endian integer |
+| `Types::Int16Enum`, `Types::Int16beEnum` | 16-bit big-endian enumerated integer |
+| `Types::Int16le` | 16-bit little-endian integer |
+| `Types::Int16leEnum` | 16-bit little-endian enumerated integer |
+| `Types::Int32`, `Types::Int32be` | 32-bit big-endian integer |
+| `Types::Int32Enum`, `Types::Int32beEnum` | 32-bit big-endian enumerated integer |
+| `Types::Int32le` | 32-bit little-endian integer |
+| `Types::Int32leEnum` | 32-bit little-endian enumerated integer |
+| `Types::Int64`, `Types::Int64be` | 64-bit big-endian integer |
+| `Types::Int64le` | 64-bit little-endian integer |
+| `Types::String` | binary string |
+| `Types::CString` | null-terminated string |
+| `Types::IntString` | binary string prepended with its field |
+| `Types::Array` | container for types. May contain multiple values of a single type |
 
 ### Composed Types
 
@@ -72,15 +72,15 @@ Composed types are some PacketGen default types built from basic ones. These typ
 
 | Type | Description |
 | :---: | :--- |
-| `Fields` | a container to concatenate multiple fields of different types together |
-| `TLV` | Type-Length-Value type |
-| `OUI` | Organizationally Unique Identifier |
+| `Types::Fields` | a container to concatenate multiple fields of different types together |
+| `Types::TLV` | Type-Length-Value type |
+| `Types::OUI` | Organizationally Unique Identifier |
 
 Some headers also define commonly used types:
 
 | Type | Description |
 | :---: | :--- |
-| `Eth::MacAddr` | Ethernet MAC address |
-| `IP::Addr` | IPv4 address |
-| `IPv6::Addr` | IPv6 address |
+| `Header::Eth::MacAddr` | Ethernet MAC address |
+| `Header::IP::Addr` | IPv4 address |
+| `Header::IPv6::Addr` | IPv6 address |
 

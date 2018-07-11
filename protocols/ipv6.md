@@ -53,6 +53,8 @@ pg> PacketGen::Header::IPv6.new(hop: 32, src: '::1', dst: '::1')
               Addr          dst: ::1
 ```
 
+## IPv6 Packet
+
 A IPv6 packet may be created this way:
 
 ```ruby
