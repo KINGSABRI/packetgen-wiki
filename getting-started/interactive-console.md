@@ -6,7 +6,7 @@ PacketGen provides an interactive console: `pgconsole`. It may be used to quickl
 
 ## Quick access to PacketGen methods
 
-`gen`, `parse`, `capture`, `read`, `write` and `default_iface` are quickly accessible:
+`gen`, `parse`, `capture`, `read` and `write` are quickly accessible:
 
 ```text
 pg> pkt = gen('Eth', src: '00:00:00:00:00:01', dst: '00:00:00:00:00:02')
@@ -56,7 +56,7 @@ This local configuration may be used to forge packets:
 
 ```text
 pg> pkt = gen('IP', src: config.ipaddr, dst: '8.8.8.8')
-pg> pkt.recalc
+pg> pkt.calc
 pg> pkt.to_w
 => 20
 ```
@@ -72,7 +72,7 @@ pg> arp '192.168.0.1'
 => "aa:bb:cc:dd:ee:ff"
 ```
 
-Utils methods are:
+`Utils` methods are:
 
 * [`arp`](http://www.rubydoc.info/gems/packetgen/PacketGen/Utils#arp-class_method)
 
