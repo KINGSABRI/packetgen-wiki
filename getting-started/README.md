@@ -81,11 +81,11 @@ pg>
 
 Here, `gen` \(a shortcut to `PacketGen.gen`\) generate a `PacketGen::Packet` object with a IP header.
 
-Then, IP header is accessed and/or modified to `#ip` method, which returns a `PacketGen::Header::IP` object \(mapping of a IP header\).
+Then, IP header is accessed and/or modified through `#ip` method, which returns a `PacketGen::Header::IP` object \(mapping of a IP header\).
 
 ### Put layers together
 
-To add layers to a packet, `PacketGen::Packet#add` method should be used. Adding a header on a packet may update fields from underlying packet. Here, adding a TCP header to our IP packet will update protocol field to 6 \(TCP protocol number\):
+To add layers to a packet, `PacketGen::Packet#add` method should be used. Adding a header on a packet may update fields from underlying packet. Here, adding a TCP header to our IP packet will update IP protocol field to 6 \(TCP protocol number\):
 
 ```text
 pg> pkt.add('TCP')
@@ -213,7 +213,7 @@ pg>
 
 ### Generate binary data and read packets
 
-From a pcket, you may generate binary data which will be sent on network. You may also parse binary data to create packets:
+From a packet, you may generate binary data which will be sent on network. You may also parse binary data to create packets:
 
 ```text
 pg> str = pkt.to_s
@@ -282,7 +282,7 @@ pg> packet.to_f('file.pcapng')
 
 ### Send packets
 
-Sendind a packet is as easy as:
+Sending a packet is as easy as:
 
 ```text
 pg> pkt.to_w
@@ -294,7 +294,7 @@ The packet will be send on your first network interface. You also may choose int
 pg> pkt.to_w('eth1')
 ```
 
-In general, packets are erroneous because some fields are not properly set. To easily fix that, use `PacketGen::Packet#calc`, which will calculte all calculatable fields \(for now: length and checksum ones\):
+In general, packets are erroneous because some fields are not properly set. To easily fix that, use `PacketGen::Packet#calc`, which will calculate all calculatable fields \(for now: length and checksum ones\):
 
 ```text
 pg> pkt.calc
@@ -311,7 +311,7 @@ You may capture packets to post-process them:
 pg> packets = capture(iface: 'eth0', max: 50, timeout: 10)
 ```
 
-This command will captute at most 50 packets from eth0, during at most 10 seconds.
+This command will capture at most 50 packets from eth0, during at most 10 seconds.
 
 You also may process them on the fly:
 
@@ -321,7 +321,7 @@ pg*     p pkt
 irb(#<PgConsole:0x0055d20a9812a0>):004:1> end
 ```
 
-Captured packets may be filetered using a tcpdump filter:
+Captured packets may be filtered using a tcpdump filter:
 
 ```text
 pg> packets = capture(iface: 'eth0', max: 50, filter: 'ip dst 192.168.1.1')
